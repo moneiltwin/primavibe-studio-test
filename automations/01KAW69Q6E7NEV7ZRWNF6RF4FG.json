@@ -1,0 +1,144 @@
+{
+  "version": "2",
+  "flowTitle": "Track Upload Processor",
+  "trigger": {
+    "valid": true,
+    "type": "WEBHOOK",
+    "settings": {
+      "input": {
+        "type": "object",
+        "properties": {
+          "genre": {
+            "type": "string",
+            "anyOf": [
+              {
+                "const": "pop",
+                "title": "Pop"
+              },
+              {
+                "const": "rock",
+                "title": "Rock"
+              },
+              {
+                "const": "jazz",
+                "title": "Jazz"
+              },
+              {
+                "const": "electronic",
+                "title": "Electronic"
+              },
+              {
+                "const": "hiphop",
+                "title": "Hip Hop"
+              },
+              {
+                "const": "classical",
+                "title": "Classical"
+              },
+              {
+                "const": "indie",
+                "title": "Indie"
+              },
+              {
+                "const": "ambient",
+                "title": "Ambient"
+              }
+            ],
+            "title": "Genre",
+            "description": "Select the music genre"
+          },
+          "duration": {
+            "type": "string",
+            "description": "Input for duration"
+          },
+          "artistName": {
+            "type": "string",
+            "description": "Input for artistName"
+          },
+          "trackTitle": {
+            "type": "string",
+            "description": "Input for trackTitle"
+          },
+          "audioFileUrl": {
+            "type": "string",
+            "description": "Input for audioFileUrl"
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "actions": [
+    {
+      "name": "a1b2c3d4-e5f6-7890-1111-111111111111",
+      "valid": false,
+      "displayName": "Add Track to Library",
+      "type": "PIECE",
+      "settings": {
+        "pieceName": "@taskade/automade-internalpiece-taskade",
+        "pieceVersion": "1.0.0",
+        "actionName": "task.create",
+        "input": {
+          "fields": {
+            "@art01": {
+              "data": {
+                "value": "{{ trigger[\"body\"][\"artistName\"] }}"
+              },
+              "rank": "1",
+              "fieldId": "@art01"
+            },
+            "@dur01": {
+              "data": {
+                "value": "{{ trigger[\"body\"][\"duration\"] }}"
+              },
+              "rank": "3",
+              "fieldId": "@dur01"
+            },
+            "@gen01": {
+              "data": {
+                "value": "{{ trigger[\"body\"][\"genre\"] }}"
+              },
+              "rank": "2",
+              "fieldId": "@gen01"
+            },
+            "@pla01": {
+              "data": {
+                "value": "0"
+              },
+              "rank": "5",
+              "fieldId": "@pla01"
+            },
+            "@trk01": {
+              "data": {
+                "value": "{{ trigger[\"body\"][\"trackTitle\"] }}"
+              },
+              "rank": "0",
+              "fieldId": "@trk01"
+            },
+            "@url01": {
+              "data": {
+                "value": "{{ trigger[\"body\"][\"audioFileUrl\"] }}"
+              },
+              "rank": "4",
+              "fieldId": "@url01"
+            }
+          },
+          "content": "{{ trigger[\"body\"][\"trackTitle\"] }}",
+          "position": "beforeend",
+          "projectId": {
+            "type": "flow-template-variable-input-type",
+            "id": "Y7bQwu8vVhyoYyD9"
+          }
+        }
+      }
+    }
+  ],
+  "variables": {
+    "Y7bQwu8vVhyoYyD9": {
+      "id": "Y7bQwu8vVhyoYyD9",
+      "rank": "V",
+      "type": "string",
+      "format": "taskade-project-id"
+    }
+  }
+}

@@ -1,0 +1,109 @@
+{
+  "version": "2",
+  "flowTitle": "Playlist Generator",
+  "trigger": {
+    "valid": true,
+    "displayName": "Daily Curation Schedule",
+    "type": "PIECE_TRIGGER",
+    "settings": {
+      "pieceName": "@taskade/automade-internalpiece-schedule",
+      "pieceVersion": "1.0.0",
+      "triggerName": "schedule.daily",
+      "input": {
+        "timezone": "America/New_York",
+        "timeOfDay": "8:00 AM"
+      }
+    }
+  },
+  "actions": [
+    {
+      "name": "b2c3d4e5-f678-90ab-2222-222222222222",
+      "valid": false,
+      "displayName": "Find Trending Tracks",
+      "type": "PIECE",
+      "settings": {
+        "pieceName": "@taskade/automade-internalpiece-taskade",
+        "pieceVersion": "1.0.0",
+        "actionName": "tasks.find",
+        "input": {
+          "projectId": {
+            "type": "flow-template-variable-input-type",
+            "id": "Y7bQwu8vVhyoYyD9"
+          },
+          "rowsToReturn": "all_matching_rows",
+          "noTasksFoundBehavior": "continue"
+        }
+      }
+    },
+    {
+      "name": "c3d4e5f6-7890-abcd-3333-333333333333",
+      "valid": false,
+      "displayName": "Create Curated Playlist",
+      "type": "PIECE",
+      "settings": {
+        "pieceName": "@taskade/automade-internalpiece-taskade",
+        "pieceVersion": "1.0.0",
+        "actionName": "task.create",
+        "input": {
+          "fields": {
+            "@trks": {
+              "data": {
+                "value": "10"
+              },
+              "rank": "2",
+              "fieldId": "@trks"
+            },
+            "@crd01": {
+              "data": {
+                "value": "{{ trigger[\"triggerTime\"] }}"
+              },
+              "rank": "4",
+              "fieldId": "@crd01"
+            },
+            "@crt01": {
+              "data": {
+                "value": "Primavibe Curator"
+              },
+              "rank": "1",
+              "fieldId": "@crt01"
+            },
+            "@mod01": {
+              "data": {
+                "value": "focus"
+              },
+              "rank": "3",
+              "fieldId": "@mod01"
+            },
+            "@pln01": {
+              "data": {
+                "value": "Daily Discovery - {{ trigger[\"triggerTime\"] }}"
+              },
+              "rank": "0",
+              "fieldId": "@pln01"
+            }
+          },
+          "content": "Daily Discovery - {{ trigger[\"triggerTime\"] }}",
+          "position": "beforeend",
+          "projectId": {
+            "type": "flow-template-variable-input-type",
+            "id": "EHpUQux3yyQQCphV"
+          }
+        }
+      }
+    }
+  ],
+  "variables": {
+    "Y7bQwu8vVhyoYyD9": {
+      "id": "Y7bQwu8vVhyoYyD9",
+      "rank": "V",
+      "type": "string",
+      "format": "taskade-project-id"
+    },
+    "EHpUQux3yyQQCphV": {
+      "id": "EHpUQux3yyQQCphV",
+      "rank": "k",
+      "type": "string",
+      "format": "taskade-project-id"
+    }
+  }
+}
